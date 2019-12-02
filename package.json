@@ -1,0 +1,39 @@
+{
+	"name": "regexper-unofficial",
+	"displayName": "regexper-unofficial",
+	"description": "Regex visualizer",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.40.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:regexper.showRegEx"
+	],
+	"main": "./extension.js",
+	"enableProposedApi": true,
+	"contributes": {
+		"commands": [
+			{
+				"command": "regexper.showRegEx",
+				"title": "Draw current regex"
+			}
+		]
+	},
+	"scripts": {
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.40.0",
+		"eslint": "^6.6.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"vscode-test": "^1.2.2"
+	}
+}

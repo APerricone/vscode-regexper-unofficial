@@ -13,7 +13,6 @@
 		"onCommand:regexper.showRegEx"
 	],
 	"main": "./extension.js",
-	"enableProposedApi": true,
 	"contributes": {
 		"commands": [
 			{

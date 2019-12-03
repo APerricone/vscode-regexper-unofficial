@@ -4,7 +4,9 @@ This extension is based on [Jeff Avalone](jeff.avallone@gmail.com)'s work, the [
 
 ## Features
 
-This extension show the current regex on 
+This extension show the current regex on another panel:
+
+![example](regexper_unofficial.png)
 
 ## Requirements
 

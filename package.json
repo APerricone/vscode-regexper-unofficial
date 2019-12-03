@@ -1,9 +1,14 @@
 {
 	"name": "regexper-unofficial",
-	"displayName": "regexper-unofficial",
-	"description": "Regex visualizer",
+	"displayName": "Regexper unofficial",
+	"description": "Regexper for vacode",
+	"author": "aperricone",
 	"version": "0.0.1",
-	"engines": {
+	"license": "MIT",
+	"repository": {
+		"url": "https://github.com/APerricone/regexper-unofficial"
+	  },
+		"engines": {
 		"vscode": "^1.40.0"
 	},
 	"categories": [

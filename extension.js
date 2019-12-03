@@ -3,6 +3,7 @@
 const vscode = require('vscode');
 var path = require("path");
 
+var regexPanel;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -36,14 +37,20 @@ function activate(context) {
 		} else {
 			regex = currDoc.document.getText(currDoc.selection);
 		}
-		var panel =  vscode.window.createWebviewPanel("rexeper","Regex "+regex,{},	{
-			// Enable javascript in the webview
-			enableScripts: true,
+		var panel = regexPanel;
+		if(!panel) {
+			panel = vscode.window.createWebviewPanel("rexeper","Regex "+regex,{}, {
+				// Enable javascript in the webview
+				enableScripts: true,
 
-			// And restrict the webview to only loading content from our extension's `media` directory.
-			localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'regexper'))]
-		})
-		panel.webview.html = `<!DOCTYPE html>
+				// And restrict the webview to only loading content from our extension's `media` directory.
+				localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'regexper'))]
+			});
+		}
+		regexPanel = panel;
+		panel.title = regex;
+		const webView = panel.webview;
+		webView.html = `<!DOCTYPE html>
 		<html><body>
 			<main id="content">
 				<div class="application"> </div>

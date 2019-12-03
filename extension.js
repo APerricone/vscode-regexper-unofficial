@@ -20,17 +20,30 @@ function activate(context) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('regexper.showRegEx', function () {
 		const currDoc = vscode.window.activeTextEditor;
-		if(!currDoc) { return; }
-		const panel = vscode.window.createWebviewPanel("rexeper","Regex ;(\/\*.*\*\/)*((\/\/|&&).*)?[\\r\\n]{1,2}$",{},	{
+		if(!currDoc) {
+			vscode.window.showInformationMessage('select a text document');
+			return; 
+		}
+		var regex; // = "\\s*((?:proc(?:e(?:d(?:u(?:r(?:e)?)?)?)?)?)|func(?:t(?:i(?:o(?:n)?)?)?)?)\\s+([a-z_][a-z0-9_]*)\\s*(?:\\(([^\\)]*)\\))?";
+		if(currDoc.selection.isEmpty) {
+			var currLine = currDoc.document.lineAt(currDoc.selection.start.line).text;
+			var start = currDoc.selection.start.character;
+			var end = start;
+			var delimits = ['"',"'","/"]
+			while(start>=0 && delimits.indexOf(currLine[start])<0) start--;
+			while(end<currLine.length && delimits.indexOf(currLine[end])<0) end++;
+			regex = currLine.substring(start+1,end);
+		} else {
+			regex = currDoc.document.getText(currDoc.selection);
+		}
+		var panel =  vscode.window.createWebviewPanel("rexeper","Regex "+regex,{},	{
 			// Enable javascript in the webview
 			enableScripts: true,
 
 			// And restrict the webview to only loading content from our extension's `media` directory.
 			localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'regexper'))]
 		})
-		const webView = panel.webview;
-		var regex = "\\s*((?:proc(?:e(?:d(?:u(?:r(?:e)?)?)?)?)?)|func(?:t(?:i(?:o(?:n)?)?)?)?)\\s+([a-z_][a-z0-9_]*)\\s*(?:\\(([^\\)]*)\\))?";
-		webView.html = `<!DOCTYPE html>
+		panel.webview.html = `<!DOCTYPE html>
 		<html><body>
 			<main id="content">
 				<div class="application"> </div>
@@ -40,7 +53,6 @@ function activate(context) {
 				<ul id="warnings"></ul>
 				<div id="regexp-render" style="text-align: center;"></div>
 				</div>
-				ciao
 			</main>
 		
 			<footer>
@@ -70,7 +82,7 @@ function activate(context) {
 				  .root circle {
 					fill: #6b6659;
 					stroke-width: 2px;
-					stroke: #000; }
+					stroke: var(--vscode-icon-foreground); }
 				  
 				  .anchor text, .any-character text {
 					fill: var(--vscode-editor-foreground); }

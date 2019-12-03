@@ -2,8 +2,9 @@
 	"name": "regexper-unofficial",
 	"displayName": "Regexper unofficial",
 	"description": "Regexper for vscode",
+    "publisher": "aperricone",
 	"author": "aperricone",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"license": "MIT",
 	"repository": {
 		"url": "https://github.com/APerricone/vscode-regexper-unofficial"
@@ -14,6 +15,7 @@
 	"categories": [
 		"Other"
 	],
+	"keywords": ["regex","regexper","visualizer"],
 	"activationEvents": [
 		"onCommand:regexper.showRegEx"
 	],

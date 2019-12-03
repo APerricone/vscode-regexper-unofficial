@@ -46,6 +46,7 @@ function activate(context) {
 				// And restrict the webview to only loading content from our extension's `media` directory.
 				localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'regexper'))]
 			});
+			panel.onDidDispose(()=> regexPanel=undefined);
 		}
 		regexPanel = panel;
 		panel.title = regex;

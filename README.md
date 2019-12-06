@@ -23,7 +23,8 @@ If you have any requirements or dependencies, add a section describing those and
 
 ## Extension Settings
 
-* `regexper-unofficial.useOnePanel` **TODO** if setted the same panel is recycled for every view.
+* `regexper-unofficial.useOnePanel` if setted the same panel is recycled for every view.
+* `regexper-unofficial.translate` if setted the text inside the rexper are localized.
 
 ## Known Issues
 

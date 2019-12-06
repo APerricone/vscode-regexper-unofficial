@@ -43,7 +43,6 @@ function activate(context) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "regexper-unofficial" is now active!');
 	const extensionPath = context.extensionPath;
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
@@ -68,7 +67,7 @@ function activate(context) {
 			regex = currDoc.document.getText(currDoc.selection);
 		}
 		var panel = regexPanel;
-		if(!panel) {
+		if(!panel && setting.useOnePanel ) {
 			panel = vscode.window.createWebviewPanel("rexeper","Regex "+regex,{}, {
 				// Enable javascript in the webview
 				enableScripts: true,

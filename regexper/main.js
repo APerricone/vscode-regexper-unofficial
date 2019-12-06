@@ -21419,7 +21419,7 @@ exports.default = {
 
   // Renders the escape into the currently set container.
   _render: function _render() {
-    return this.renderLabel(this.label).then(function (label) {
+    return this.renderLabel(window.localize(this.label)).then(function (label) {
       label.select('rect').attr({
         rx: 3,
         ry: 3
@@ -27184,9 +27184,9 @@ var Regexper = function () {
     this.error = root.querySelector('#error');
     this.warnings = root.querySelector('#warnings');
 
-    if(this.form) {
+    if (this.form) {
       this.links = this.form.querySelector('ul');
-      if(this.links) {
+      if (this.links) {
         this.permalink = this.links.querySelector('a[data-action="permalink"]');
         this.downloadSvg = this.links.querySelector('a[data-action="download-svg"]');
         this.downloadPng = this.links.querySelector('a[data-action="download-png"]');
@@ -27266,9 +27266,9 @@ var Regexper = function () {
   }, {
     key: 'bindListeners',
     value: function bindListeners() {
-      if(this.field) this.field.addEventListener('keypress', this.keypressListener.bind(this));
-      if(this.form) this.form.addEventListener('submit', this.submitListener.bind(this));
-      if(this.root) this.root.addEventListener('keyup', this.documentKeypressListener.bind(this));
+      if (this.field) this.field.addEventListener('keypress', this.keypressListener.bind(this));
+      if (this.form) this.form.addEventListener('submit', this.submitListener.bind(this));
+      if (this.root) this.root.addEventListener('keyup', this.documentKeypressListener.bind(this));
       window.addEventListener('hashchange', this.hashchangeListener.bind(this));
     }
 
@@ -27325,8 +27325,8 @@ var Regexper = function () {
     //
     // - __expression__ - Regular expression to display.
     value: function showExpression(expression) {
-      if(this.field) this.field.value = expression;
-      if(this.src) expression=this.src.textContent;
+      if (this.field) this.field.value = expression;
+      if (this.src) expression = this.src.textContent;
       this.state = '';
 
       if (expression !== '') {
@@ -27354,7 +27354,7 @@ var Regexper = function () {
     value: function updateLinks() {
       var _this = this;
 
-      if(!this.links) return;
+      if (!this.links) return;
       var classes = _lodash2.default.without(this.links.className.split(' '), ['hide-download-svg', 'hide-permalink']);
       var svg = this.svgContainer.querySelector('.svg');
 
@@ -40177,6 +40177,9 @@ var Node = function () {
     // This is the current parser state (an instance
     // [ParserState](./parser_state.html).)
     this.state = Node.state;
+    window.localize = window.localize || function (v) {
+      return v;
+    };
   }
 
   // Node-type module to extend the Node instance with. Setting of this is
@@ -40824,9 +40827,9 @@ exports.default = {
   },
   setup: function setup() {
     if (this.textValue === '^') {
-      this.label = 'Start of line';
+      this.label = window.localize('Start of line');
     } else {
-      this.label = 'End of line';
+      this.label = window.localize('End of line');
     }
   }
 };
@@ -40897,9 +40900,9 @@ exports.default = {
   // Returns the label for the subexpression.
   label: function label() {
     if (_lodash2.default.has(this.labelMap, this.properties.capture.textValue)) {
-      return this.labelMap[this.properties.capture.textValue];
+      return window.localize(this.labelMap[this.properties.capture.textValue]);
     } else {
-      return 'group #' + this.state.groupCounter++;
+      return window.localize("group #{0}").replace("{0}", this.state.groupCounter++);
     }
   },
   setup: function setup() {
@@ -40983,7 +40986,7 @@ exports.default = {
     // The label for the charset will be:
     // - "One of:" for charsets of the form: `[abc]`.
     // - "None of:" for charsets of the form: `[^abc]`.
-    this.label = this.properties.invert.textValue === '^' ? 'None of:' : 'One of:';
+    this.label = window.localize(this.properties.invert.textValue === '^' ? 'None of:' : 'One of:');
 
     // Removes any duplicate parts from the charset. This is based on the type
     // and text value of the part, so `[aa]` will have only one item, but
@@ -41164,7 +41167,7 @@ exports.default = {
   type: 'any-character',
 
   _render: function _render() {
-    return this.renderLabel('any character');
+    return this.renderLabel(window.localize('any character'));
   }
 }; // AnyCharacter nodes are for `*` regular expression syntax. They are rendered
 // as just an "any character" label.

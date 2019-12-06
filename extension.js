@@ -1,11 +1,40 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-var path = require("path");
+const path = require("path");
+const fs = require("fs");
 
 var regexPanel;
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+var english;
+var locale, lang, tryied;
+function getLocalizerCode(localize,extensionPath) {
+	var code = "window.localize = function(v) {\r\n"
+	if(localize) {
+		var config = JSON.parse(process.env.VSCODE_NLS_CONFIG);
+		if(!english)
+			english = JSON.parse(fs.readFileSync(path.resolve(__dirname, path.join(extensionPath,"package.nls.json")), 'utf8'));
+		try
+		{
+			if(tryied!=config.locale) {
+				lang = config.locale;
+				locale = JSON.parse(fs.readFileSync(path.resolve(__dirname, path.join(extensionPath,"package.nls."+lang+".json")), 'utf8'));
+			}
+		}
+		catch (error) {
+			locale = english;
+			lang = "en"
+		}
+		tryied = config.locale;
+		if(lang!="en") {
+			for (const key in english) {
+				if (english.hasOwnProperty(key) && locale.hasOwnProperty(key)) {
+					const enVer = english[key];					
+					const lcVer = locale[key];
+					code+=`if(v=="${enVer}") v="${lcVer}";\r\n`;
+				}
+			}
+		}
+	}
+	return code+"\r\nreturn v;}"
+}
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -25,7 +54,8 @@ function activate(context) {
 			vscode.window.showInformationMessage('select a text document');
 			return; 
 		}
-		var regex; // = "\\s*((?:proc(?:e(?:d(?:u(?:r(?:e)?)?)?)?)?)|func(?:t(?:i(?:o(?:n)?)?)?)?)\\s+([a-z_][a-z0-9_]*)\\s*(?:\\(([^\\)]*)\\))?";
+		var setting = vscode.workspace.getConfiguration('regexper-unofficial');
+		var regex;
 		if(currDoc.selection.isEmpty) {
 			var currLine = currDoc.document.lineAt(currDoc.selection.start.line).text;
 			var start = currDoc.selection.start.character;
@@ -153,7 +183,7 @@ function activate(context) {
 					<div style="width:0;"></div>
 				  </div>
 				</script>
-		
+				<script>${getLocalizerCode(setting.translate,extensionPath)}</script>
 				<script src="${webView.asWebviewUri(vscode.Uri.file(path.join(extensionPath, 'regexper', 'main.js')))}" async defer></script>
 			</footer>
 		  </body>

@@ -2,31 +2,48 @@
 	"name": "regexper-unofficial",
 	"displayName": "Regexper unofficial",
 	"description": "Regexper for vscode",
-    "publisher": "aperricone",
+	"publisher": "aperricone",
 	"author": "aperricone",
 	"version": "0.0.2",
 	"license": "MIT",
 	"repository": {
 		"url": "https://github.com/APerricone/vscode-regexper-unofficial"
-	  },
-		"engines": {
+	},
+	"engines": {
 		"vscode": "^1.40.0"
 	},
 	"categories": [
 		"Other"
 	],
-	"keywords": ["regex","regexper","visualizer"],
+	"keywords": [
+		"regex", "regexper", "visualizer"
+	],
 	"activationEvents": [
 		"onCommand:regexper.showRegEx"
 	],
 	"main": "./extension.js",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [ {
 				"command": "regexper.showRegEx",
-				"title": "Draw current regex"
+				"title": "%regexper.cmd%"
 			}
-		]
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Regexper unofficial",
+			"properties": {
+				"regexper-unofficial.useOnePanel": {
+					"type": "boolean",
+					"description": "%regexper.useOnePanel%",
+					"default": true
+				},
+				"regexper-unofficial.translate": {
+					"type": "boolean",
+					"description": "%regexper.translate%",
+					"default": true
+				}
+			}
+		},
 	},
 	"scripts": {
 		"test": "node ./test/runTest.js"
@@ -41,5 +58,8 @@
 		"mocha": "^6.2.2",
 		"typescript": "^3.6.4",
 		"vscode-test": "^1.2.2"
+	},
+	"dependencies": {
+		"vscode-nls": "^4.1.1"
 	}
 }

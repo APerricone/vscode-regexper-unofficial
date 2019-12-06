@@ -7,3 +7,5 @@ vsc-extension-quickstart.md
 **/*.map
 **/.eslintrc.json
 **/index.html
+regexper/index.html
+package.nls.jp.json
